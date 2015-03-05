@@ -23,16 +23,13 @@ var ElpAAA = BuildProtoCell('Eneloop "AAA" cell', "NiMH", 1.2, 750, 750, 2.25, t
 var userInputSeries = 0;
 
 function buildSBatt(batCell, userInputSeries){ 
-  var batS = [];
-  var seriesVolts = 0;
-  var seriesAmps = 0;
-  var seriesPrice = 0;
+  var batS = [];  
     for (var i = 0; i<userInputSeries; i++){
     batS.push(new batCell);
     }
-  seriesVolts = batS[0].volts * userInputSeries;
-  seriesAmps = batS[0].mAhRating();
-  seriesPrice = batS[0].priceEach() * userInputSeries;
+  var seriesVolts = batS[0].volts * userInputSeries;
+  var seriesAmps = batS[0].mAhRating();
+  var seriesPrice = batS[0].priceEach() * userInputSeries;
   batS.push(seriesVolts);
   batS.push(seriesAmps);
   batS.push(seriesPrice);
