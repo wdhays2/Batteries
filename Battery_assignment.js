@@ -63,21 +63,22 @@ var Battery = [];
 var currentDraw = 0;
 var hoursUsed = 0;
 
-Battery.prototype = {
-  charge: function(){
-    if (this.rechar == true){
-      this.mAhLeft = this.mAhRating;
-      return "The battery is charged to " + this.mAhLeft + "mAh.";
-    } else {
-      return "This battery is not rechargeable!";
-    }
-  },
-  use: function(){
-    if (this.mAhLeft < hoursUsed * currentDraw * 1.43){
-      return "Not enough capacity for that! The remaining capacity is " + this.mAhLeft + "mAh.";
-    } else {
-      this.mAhLeft -= hoursUsed * currentDraw * 1.43;
-      return this.mAhLeft + "mAh remaining.";    
-      }
+
+function charge(batCell){
+  for (var i = 0; i<batCell.length-3; i++)
+  if (batCell[i].rechar() == true){
+    batCell[i].mAhLeft = batCell[i].mAhRating();
+    return "The battery is charged to " + batCell[0].mAhLeft * (batCell.length - 3) + "mAh.";
+  } else {
+    return "That is not rechargeable!";
   }
+}
+  
+function use(batCell){
+  if (this.mAhLeft < hoursUsed * currentDraw * 1.43){
+    return "Not enough capacity for that! The remaining capacity is " + this.mAhLeft + "mAh.";
+  } else {
+    this.mAhLeft -= hoursUsed * currentDraw * 1.43;
+    return this.mAhLeft + "mAh remaining.";    
+    }
 }
