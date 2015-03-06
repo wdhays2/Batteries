@@ -22,32 +22,30 @@ var ElpAAA = BuildProtoCell('Eneloop "AAA" cell', "NiMH", 1.2, 750, 750, 2.25, t
 
 function buildSCell(batCell, userInputSeries){ 
   var cellS = [];  
-    for (var i = 0; i<userInputSeries; i++){
+  for (var i = 0; i<userInputSeries; i++){
     cellS.push(new batCell());
-    }
+  }
   var seriesVolts = cellS[0].volts * userInputSeries;
   var seriesAmps = cellS[0].mAhRating();
   var seriesPrice = cellS[0].priceEach() * userInputSeries;
   cellS.push(seriesVolts.toFixed(1));
   cellS.push(seriesAmps.toFixed(0));
   cellS.push(seriesPrice.toFixed(2));
-
   return cellS;
 }
 
 function buildPCell(batCell, userInputParallel){
   var cellP = [];   
-    for (var i = 0; i<userInputParallel; i++){
+  for (var i = 0; i<userInputParallel; i++){
     cellP.push(new batCell());
-    }
+  }
   var parallelVolts = cellP[0].volts; 
   var parallelAmps = cellP[0].mAhRating() * userInputParallel;
   var parallelPrice = cellP[0].priceEach() * userInputParallel; 
   cellP.push(parallelVolts.toFixed(1));
   cellP.push(parallelAmps.toFixed(0));
   cellP.push(parallelPrice.toFixed(2));   
-  return cellP
-;
+  return cellP;
 }
 
 function getCellSpecs(batCell){
@@ -64,14 +62,20 @@ var currentDraw = 0;
 var hoursUsed = 0;
 
 
-function charge(batCell){
-  for (var i = 0; i<batCell.length-3; i++)
-  if (batCell[i].rechar() == true){
-    batCell[i].mAhLeft = batCell[i].mAhRating();
-    return "The battery is charged to " + batCell[0].mAhLeft * (batCell.length - 3) + "mAh.";
-  } else {
+
+function charge(batCell, chargeHours, chargeRate){   
+  if (batCell[0].rechar() != true){
     return "That is not rechargeable!";
-  }
+  } else if (
+    batCell[0].mAhRating() < chargeHours * chargeRate / (batCell.length-3)){
+    return "That would overcharge the battery. This battery's maximum capacity is " +
+    batCell[0].mAhRating() * (batCell.length-3) + "mAh.";    
+  } else {
+      for (var i = 0; i < batCell.length-3; i++){
+      batCell[i].mAhLeft = chargeHours * chargeRate / (batCell.length - 3);
+      }
+      return "The battery is charged to " + batCell[0].mAhLeft * (batCell.length - 3) + "mAh.";  
+    }
 }
   
 function use(batCell, hoursUsed, currentDraw){  
@@ -80,8 +84,8 @@ function use(batCell, hoursUsed, currentDraw){
     batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3)  + "mAh.";
   } else {
     for (var i = 0; i<batCell.length-3; i++){
-    batCell[i].mAhLeft -= hoursUsed * currentDraw * 1.43 / (batCell.length - 3);
-    }
-    return batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3) + "mAh remaining.";    
-    }
+     batCell[i].mAhLeft -= hoursUsed * currentDraw * 1.43 / (batCell.length - 3);
+    }     
+    return batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3) + "mAh remaining.";
+  }
 }
