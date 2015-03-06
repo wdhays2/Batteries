@@ -4,12 +4,13 @@ function BuildProtoCell(name, type, volts, mAhRating, mAhLeft, priceEach, rechar
     this.type = function() {return type;};
     this.volts = volts;
     this.mAhRating = function() {return mAhRating;};
-    this.mAhLeft = mAhLeft.toFixed(0);
+    this.mAhLeft = mAhLeft;
     this.priceEach = function() {return priceEach.toFixed(2);};
     this.rechar = function() {return rechar;};
   } 
   return cell;
-}
+};
+
 var Pan18650 = BuildProtoCell("Panasonic 18650", "Li-ion", 3.7, 3400, 0, 7.50, true);
 var Gen18650 = BuildProtoCell("Generic 18650", "Li-ion", 4.0, 2000, 0, 2.00, true);
 var TgyD = BuildProtoCell('Tenergy "D" cell', "NiMH", 1.2, 10000, 0, 7.36, true);
@@ -32,13 +33,14 @@ function buildSCell(batCell, userInputSeries){
   cellS.push(seriesAmps.toFixed(0));
   cellS.push(seriesPrice.toFixed(2));
   return cellS;
-}
+};
 
 function buildPCell(batCell, userInputParallel){
   var cellP = [];   
   for (var i = 0; i<userInputParallel; i++){
     cellP.push(new batCell());
   }
+
   var parallelVolts = cellP[0].volts; 
   var parallelAmps = cellP[0].mAhRating() * userInputParallel;
   var parallelPrice = cellP[0].priceEach() * userInputParallel; 
@@ -46,46 +48,48 @@ function buildPCell(batCell, userInputParallel){
   cellP.push(parallelAmps.toFixed(0));
   cellP.push(parallelPrice.toFixed(2));   
   return cellP;
-}
+};
 
 function getCellSpecs(batCell){
   return "Name: " + batCell.name() + ", type: " + batCell.type() + ", voltage: " + batCell.volts +
    " volts, capacity: " + batCell.mAhRating() + "mAh, current charge: " + batCell.mAhLeft + 
    "mAh, price: $" + batCell.priceEach() + ", rechargeable: " + batCell.rechar();
-}
+};
 
 
 
 var batBank = [];
 var Battery = [];
-var currentDraw = 0;
-var hoursUsed = 0;
+
 
 
 
 function charge(batCell, chargeHours, chargeRate){   
   if (batCell[0].rechar() != true){
-    return "That is not rechargeable!";
-  } else if (
-    batCell[0].mAhRating() < chargeHours * chargeRate / (batCell.length-3)){
+    return "This battery is not rechargeable!";
+  } 
+  else if (
+    (batCell[0].mAhRating() - batCell[0].mAhleft) * (batCell.length - 3) < (chargeHours * chargeRate)){
     return "That would overcharge the battery. This battery's maximum capacity is " +
-    batCell[0].mAhRating() * (batCell.length-3) + "mAh.";    
-  } else {
-      for (var i = 0; i < batCell.length-3; i++){
-      batCell[i].mAhLeft = chargeHours * chargeRate / (batCell.length - 3);
-      }
-      return "The battery is charged to " + batCell[0].mAhLeft * (batCell.length - 3) + "mAh.";  
+    (batCell[0].mAhRating() * (batCell.length - 3)) + "mAh."; 
+  } 
+  else { 
+    for (var i = 0; i < (batCell.length - 3); i++){
+     batCell[i].mAhLeft += (chargeHours * chargeRate / (batCell.length - 3));
     }
-}
+  }
+  return "The battery is charged to " + (batCell[0].mAhLeft * (batCell.length - 3)) + "mAh.";  
+};
   
 function use(batCell, hoursUsed, currentDraw){  
-  if (batCell[0].mAhLeft * (batCell.length - 3) < hoursUsed * currentDraw * 1.43){
+  if ((batCell[0].mAhLeft * (batCell.length - 3)) < (hoursUsed * currentDraw * 1.43)){
     return "Not enough capacity for that! The remaining capacity is " + 
-    batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3)  + "mAh.";
-  } else {
-    for (var i = 0; i<batCell.length-3; i++){
-     batCell[i].mAhLeft -= hoursUsed * currentDraw * 1.43 / (batCell.length - 3);
-    }     
-    return batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3) + "mAh remaining.";
-  }
-}
+    (batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3))  + "mAh.";
+  } 
+  else {
+    for (var i = 0; i < (batCell.length - 3); i++){
+     batCell[i].mAhLeft -= (hoursUsed * currentDraw * 1.43 / (batCell.length - 3));
+    }
+  }   
+  return (batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3)) + "mAh remaining.";
+};
