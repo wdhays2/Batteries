@@ -74,11 +74,14 @@ function charge(batCell){
   }
 }
   
-function use(batCell){
-  if (this.mAhLeft < hoursUsed * currentDraw * 1.43){
-    return "Not enough capacity for that! The remaining capacity is " + this.mAhLeft + "mAh.";
+function use(batCell, hoursUsed, currentDraw){  
+  if (batCell[0].mAhLeft * (batCell.length - 3) < hoursUsed * currentDraw * 1.43){
+    return "Not enough capacity for that! The remaining capacity is " + 
+    batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3)  + "mAh.";
   } else {
-    this.mAhLeft -= hoursUsed * currentDraw * 1.43;
-    return this.mAhLeft + "mAh remaining.";    
+    for (var i = 0; i<batCell.length-3; i++){
+    batCell[i].mAhLeft -= hoursUsed * currentDraw * 1.43 / (batCell.length - 3);
+    }
+    return batCell[0].mAhLeft.toFixed(0) * (batCell.length - 3) + "mAh remaining.";    
     }
 }
