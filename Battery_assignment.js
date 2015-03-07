@@ -35,26 +35,6 @@ function BuildProtoCell(name, type, volts, mAhRating, mAhLeft, priceEach, rechar
   return cell;
 }
 
-function buildSCell(batCellType, userInputSeries){
-  var cellS = [];
-  for (var i = 0; i<userInputSeries; i++){
-    cellS.push(new batCellType());
-  }
-  var seriesVolts = cellS[0].volts * userInputSeries;
-  var seriesAmps = cellS[0].mAhRating();
-  var seriesPrice = cellS[0].priceEach() * userInputSeries;
-  cellS.push(seriesVolts.toFixed(1));
-  cellS.push(seriesAmps.toFixed(0));
-  cellS.push(seriesPrice.toFixed(2));
-  return cellS;
-}
-
-function getCellSpecs(batCell){
-  return "Name: " + batCell.name() + ", type: " + batCell.type() + ", voltage: " + batCell.volts +
-   " volts, capacity: " + batCell.mAhRating() + "mAh, current charge: " + batCell.mAhLeft +
-   "mAh, price: $" + batCell.priceEach() + ", rechargeable: " + batCell.rechar();
-}
-
 function buildBattery(batCell, userInputSeries, userInputParallel){
   var battery = [];
   for ( var x = 0; x < userInputSeries; x++){
@@ -71,8 +51,7 @@ function charge(deadBat, chargeHours, chargeRate){
     return "That battery is not rechargeable!";
   } else if ((deadBat[0][0].mAhRating() - deadBat[0][0].mAhleft) < (chargeHours * chargeRate / 
       (deadBat.length * deadBat[0].length))){
-        return "That would overcharge the battery. This battery's maximum capacity is " +
-        (deadBat[0][0].mAhRating() * deadBat.length * deadBat[0].length) + "mAh.";    
+        return "That would overcharge the battery.";    
       } else {
         for(var i = 0; i < deadBat.length; i++){
           for(var j = 0; j < deadBat[i].length; j++){            
@@ -114,4 +93,10 @@ function numCells(nc){
 
 function totalPrice(pr){
   return "$" + (pr.length * pr[0].length * pr[0][0].priceEach()).toFixed(2); 
+}
+
+function getCellSpecs(batCell){
+  return "Name: " + batCell.name() + ", type: " + batCell.type() + ", voltage: " + batCell.volts +
+   " volts, capacity: " + batCell.mAhRating() + "mAh, current charge: " + batCell.mAhLeft +
+   "mAh, price: $" + batCell.priceEach() + ", rechargeable: " + batCell.rechar();
 }
