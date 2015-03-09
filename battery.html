@@ -42,6 +42,8 @@
         <option>Eneloop "AAA" cell</option>         
       </select>
       <br>
+      <form>Select number in series: <input type="text" name="userInputSeries"></form>
+      <br>
   <h2>Parallel Battery Pack</h2>
   <p>Select cells from both lists for a combined Series-Parallel battery pack.
      *Note- Cells for Series-Parallel battery packs must match. </p>
@@ -60,9 +62,26 @@
         <option>Eneloop "AA" cell</option>
         <option>Eneloop "AAA" cell</option> 
       </select>
+      <br>
+      <form>Select number in parallel: <input type="text" name="userInputParallel"></form>
     </div>
   </form>
 </div>
+<div class="container">
+  <h2>Battery Calculator</h2>
+    <form>Specify desired voltage: <input type="text" name="userVolts"></form>
+    <br>
+    <li>Actual voltage: <span id="leftRear">0</span> volts </li>
+    <br>
+    <form>Specify desired mAh rating: <input type="text" name="userAmps"></form>
+    <br>
+    <li>Actual mAh rating: <span id="leftRear">0</span> mAh </li>
+    <br>
+    <form>Specify desired price (optional): <input type="text" name="userPrice"></form>
+    <br>
+    <li>Total price: $<span id="leftRear">0</span> </li>
+    <br>
+
 
 </body>
 </html>

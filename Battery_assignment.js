@@ -1,6 +1,5 @@
 // Variables
 // ########################################
-var BatLossMultipler = 1.42857;
 var Pan18650 = BuildProtoCell("Panasonic 18650", "Li-ion", 3.7, 3400, 0, 7.50, true);
 var Gen18650 = BuildProtoCell("Generic 18650", "Li-ion", 4.0, 2000, 0, 2.00, true);
 var TgyD = BuildProtoCell('Tenergy "D" cell', "NiMH", 1.2, 10000, 0, 7.36, true);
@@ -11,11 +10,16 @@ var DclAAA = BuildProtoCell('Duracell "AAA" cell', "Alkaline", 1.5, 1000, 1000, 
 var ElpAA = BuildProtoCell('Eneloop "AA" cell', "NiMH", 1.2, 2000, 2000, 3.09, true);
 var ElpAAA = BuildProtoCell('Eneloop "AAA" cell', "NiMH", 1.2, 750, 750, 2.25, true);
 
-var c = buildBattery(Pan18650, 3, 4);
-var d = buildBattery(Pan18650, 1, 1);
-
 var tempSerMatch = 0;
 var tempParMatch = 0;
+
+var ninetyPerIncl = .89;
+var oneTenPerIncl = 1.112;
+var oneTwentyPerIncl = 1.21;
+var BatLossMultipler = 1.42857;
+
+var c = buildBattery(Pan18650, 3, 4);
+var d = buildBattery(Pan18650, 1, 1);
 
 // Logic
 // ########################################
@@ -122,7 +126,7 @@ function matchUserVolts(batCell, userVolts){
   var numCells  = userVolts / tempVolts;
   var closestSerMatch = numCells.toFixed(0);  
   var actualVolts = closestSerMatch * tempVolts;  
-  if ((actualVolts < (.89 * userVolts)) || (actualVolts > (1.112 * userVolts))){
+  if ((actualVolts < (ninetyPerIncl * userVolts)) || (actualVolts > (oneTenPerIncl * userVolts))){
     return "Perhaps a different cell would be a better match for that voltage.";
   } else if (closestSerMatch == 1){
     tempSerMatch = closestSerMatch;
@@ -138,7 +142,7 @@ function matchUserAmps(batCell, userAmps){
   var numCells  = userAmps / tempAmps;
   var closestParMatch = numCells.toFixed(0);  
   var actualAmps = closestParMatch * tempAmps;  
-  if ((actualAmps < (.89 * userAmps)) || (actualAmps > (1.22 * userAmps))){
+  if ((actualAmps < (ninetyPerIncl * userAmps)) || (actualAmps > (oneTwentyPerIncl * userAmps))){
     return "Perhaps a different cell would be a better match for that mAh rating.";
   } else if (closestParMatch == 1){
     tempParMatch = closestParMatch;
@@ -153,7 +157,7 @@ function matchUserPrice(batCell, userPrice){
   var priceEach = batCell[0][0].priceEach();
   var numCells  = tempSerMatch * tempParMatch;   
   var totalPrice = numCells * priceEach;  
-  if (totalPrice > (1.21 * userPrice)){
+  if (totalPrice > (oneTwentyPerIncl * userPrice)){
     return "Perhaps a different cell would be a better match for that price range.";
   } else { 
 
