@@ -17,7 +17,7 @@
   <!-- View Helpers -->
   <script src="views/helpers.js"></script>
   
-  <!-- Custome styles -->
+  <!-- Custom styles -->
   <link rel="stylesheet" type="text/css" href="stylesheets/battery.css">
 </head>
 <body>
@@ -31,7 +31,7 @@
   </div>
 </div>
 <div class="container">
-  <h2>Custom Battery Packs</h2>
+  <h3>Custom Battery Packs</h3>
    <form role="form">
     <div class="form-group">
       <label for="series">Select desired battery cell:</label>
@@ -49,27 +49,29 @@
       </select>
     </div>
   </form>
-  <div>    
-    <form>Select number in series: <input type="text" name="userInputSeries"></form>
+  <div>       
+    <form>Select number in series: <input type="number" id="userInputSer" min="1"
+     max="100"></form>
     <br>  
-    <form>Select number in parallel: <input type="text" name="userInputParallel"></form>
+    <form>Select number in parallel: <input type="number" id="userInputPar" 
+     min="1" max="100"></form>
   </div>
 </div>
 <div class="container">
-  <h2>Battery Calculator</h2>
-    <form>Specify desired voltage: <input type="text" name="userVolts"></form>
+  <h3>Battery Calculator</h3>
+    <form>Specify desired voltage: <input type="number" id="userVolts" min="1" max="500"></form>
     <br>
     <li>Actual voltage: <span id="actualVolts">0</span> volts </li>
     <br>
-    <form>Specify desired mAh rating: <input type="text" name="userAmps"></form>
+    <form>Specify desired mAh rating: <input type="number" id="userAmps" min="675" max="1000000"></form>
     <br>
     <li>Actual mAh rating: <span id="actualAmps">0</span> mAh </li>
     <br>
-    <form>Specify desired price (optional): <input type="text" name="userPrice"></form>
+    <form>Specify desired price (optional): <input type="number" id="userPrice" min="1" max="100000"></form>
     <br>
     <li>Total price: $<span id="totalPrice">0</span> </li>
     <br>
-
+    <input type="button" onclick="buildBatt()" value="Build Battery">
   </div>
 
 

@@ -1,7 +1,10 @@
+$( document ).ready(function() {
+
+});
 
 
 
-function selectCell(){
-var batCell = "";
-batCell = $("#cellOptions").val();
+function buildBatt(batCell, numSeries, numParallel) {
+buildBattery(batCell, numSeries, numParallel);
+console.log(this.batCell);
 }

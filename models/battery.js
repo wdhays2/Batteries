@@ -13,7 +13,7 @@ var ElpAAA = BuildProtoCell('Eneloop "AAA" cell', "NiMH", 1.2, 750, 750, 2.25, t
 var tempSerMatch = 0;
 var tempParMatch = 0;
 
-var ninetyPerIncl = .89;
+var ninetyPerIncl = 0.89;
 var oneTenPerIncl = 1.112;
 var oneTwentyPerIncl = 1.21;
 var BatLossMultipler = 1.42857;
@@ -46,7 +46,7 @@ function BuildProtoCell(name, type, volts, mAhRating, mAhLeft, priceEach, rechar
 }
 
 function buildBattery(batCell, userInputSeries, userInputParallel){
-  var battery = [];
+  var battery = [];  
   for ( var x = 0; x < userInputParallel; x++){
     battery.push([]);    
     for ( var y = 0; y < userInputSeries; y++){
