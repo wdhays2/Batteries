@@ -1,5 +1,7 @@
 $( document ).ready(function() {
-  helloworld();
+  $("#cellOptions").change(function() {
+    helloworld();  // you should really  call a controller function here.
+  });
 });
 
 function helloworld() {
