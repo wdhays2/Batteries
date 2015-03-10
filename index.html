@@ -21,44 +21,44 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/battery.css">
 </head>
 <body>
-<div class="background"></div>
-  <div class='navbar navbar-default navbar-static-top'>
-    <div class='container'>
-      <div class='navbar-header'>
-        <a href='/' class='navbar-brand'>Battery Project</a>
+  <div class="background"></div>
+    <div class='navbar navbar-default navbar-static-top'>
+      <div class='container'>
+        <div class='navbar-header'>
+          <a href='/' class='navbar-brand'>Battery Project</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="container">
-  <h3>Custom Battery Packs</h3>
-   <form role="form">
-    <div class="form-group">
-      <label for="series">Select desired battery cell:</label>
-      <select class="form-control" id="cellOptions">
-        <option value="0">None</option> 
-        <option value="Pan18650">Panasonic 18650</option>
-        <option value="Gen18650">Generic 18650</option>
-        <option value="TgyD">Tenergy "D" cell</option>
-        <option value="DclD">Duracell "D" cell</option>
-        <option value="DclC">Duracell "C" cell</option>
-        <option value="DclAA">Duracell "AA" cell</option>
-        <option value ="DclAAA">Duracell "AAA" cell</option>
-        <option value="EnlAA">Eneloop "AA" cell</option>
-        <option value="EnlAAA">Eneloop "AAA" cell</option>         
-      </select>
+  <div class="container">
+    <h3>Custom Battery Packs</h3>
+     <form role="form">
+      <div class="form-group">
+        <label for="series">Select desired battery cell:</label>
+        <select class="form-control" id="cellOptions">
+          <option value="0">None</option> 
+          <option value="Pan18650">Panasonic 18650</option>
+          <option value="Gen18650">Generic 18650</option>
+          <option value="TgyD">Tenergy "D" cell</option>
+          <option value="DclD">Duracell "D" cell</option>
+          <option value="DclC">Duracell "C" cell</option>
+          <option value="DclAA">Duracell "AA" cell</option>
+          <option value ="DclAAA">Duracell "AAA" cell</option>
+          <option value="EnlAA">Eneloop "AA" cell</option>
+          <option value="EnlAAA">Eneloop "AAA" cell</option>
+        </select>
+      </div>
+    </form>
+    <div>       
+      <form>Select number in series: <input type="number" id="userInputSer" min="1"
+       max="100"></form>
+      <br>  
+      <form>Select number in parallel: <input type="number" id="userInputPar" 
+       min="1" max="100"></form>
     </div>
-  </form>
-  <div>       
-    <form>Select number in series: <input type="number" id="userInputSer" min="1"
-     max="100"></form>
-    <br>  
-    <form>Select number in parallel: <input type="number" id="userInputPar" 
-     min="1" max="100"></form>
   </div>
-</div>
-<div class="container">
-  <h3>Battery Calculator</h3>
+  <div class="container">
+    <h3>Battery Calculator</h3>
     <form>Specify desired voltage: <input type="number" id="userVolts" min="1" max="500"></form>
     <br>
     <li>Actual voltage: <span id="actualVolts">0</span> volts </li>
@@ -71,9 +71,10 @@
     <br>
     <li>Total price: $<span id="totalPrice">0</span> </li>
     <br>
-    <input type="button" onclick="buildBatt()" value="Build Battery">
+    <input id="buildBattery" type="button" value="Build Battery">
   </div>
 
+  <div id="batteryStatusArea">NO BATTERY BUILT</div>
 
-</body>
+  </body>
 </html>

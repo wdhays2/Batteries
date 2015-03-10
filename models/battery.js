@@ -50,7 +50,7 @@ function buildBattery(batCell, userInputSeries, userInputParallel){
   for ( var x = 0; x < userInputParallel; x++){
     battery.push([]);    
     for ( var y = 0; y < userInputSeries; y++){
-      battery[x].push(new batCell);
+      battery[x].push(new batCell());
     }    
   }
   return battery;
