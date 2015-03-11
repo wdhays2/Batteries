@@ -100,11 +100,11 @@ function use(freshBat, hoursUsed, currentDraw){
 }
 
 function checkVolts(vo){
-  return (vo.length * vo[0][0].volts).toFixed(1) + " volts";
+  return (vo[0].length * vo[0][0].volts).toFixed(1) + " volts";
 }
 
 function checkAmps(am){
-  return (am[0].length * am[0][0].mAhLeft).toFixed(0) + "mAh";
+  return (am.length * am[0][0].mAhRating()) + "mAh";
 }
 
 function numCells(nc){
@@ -121,19 +121,17 @@ function getCellSpecs(batCell){
    "mAh, price: $" + batCell.priceEach() + ", rechargeable: " + batCell.rechar();
 }
 
-function matchUserVolts(batCell, userVolts){
+function matchUserVolts(batCell, userVolts){  
   var tempVolts = batCell[0][0].volts;
   var numCells  = userVolts / tempVolts;
   var closestSerMatch = numCells.toFixed(0);  
-  var actualVolts = closestSerMatch * tempVolts;  
+  var actualVolts = closestSerMatch * tempVolts;
+  batCell = new batCell(batCell, 1, 1);
   if ((actualVolts < (ninetyPerIncl * userVolts)) || (actualVolts > (oneTenPerIncl * userVolts))){
     return "Perhaps a different cell would be a better match for that voltage.";
-  } else if (closestSerMatch == 1){
-    tempSerMatch = closestSerMatch;
-      return closestSerMatch + " of those will provide " + actualVolts.toFixed(1) + " volts.";
   } else {
     tempSerMatch = closestSerMatch;
-    return closestSerMatch + " of those in series will provide " + actualVolts.toFixed(1) + " volts.";
+    return closestSerMatch;
   }  
 }
 
@@ -144,12 +142,9 @@ function matchUserAmps(batCell, userAmps){
   var actualAmps = closestParMatch * tempAmps;  
   if ((actualAmps < (ninetyPerIncl * userAmps)) || (actualAmps > (oneTwentyPerIncl * userAmps))){
     return "Perhaps a different cell would be a better match for that mAh rating.";
-  } else if (closestParMatch == 1){
-    tempParMatch = closestParMatch;
-    return closestParMatch + " of those will provide " + actualAmps + "mAh.";
   } else { 
     tempParMatch = closestParMatch;
-    return closestParMatch + " of those in parallel will provide " + actualAmps + "mAh.";
+    return closestParMatch;
   }  
 }
 
