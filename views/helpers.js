@@ -27,7 +27,7 @@ $( document ).ready(function() {
     displayVolts();
     displayAmps();
     displayPrice();
-    suggestVolts();    
+
   });
   
 });
@@ -36,8 +36,6 @@ $( document ).ready(function() {
 // Global Variables
 // ---------------------------
 var batteryHolder;
-var numSeriesSuggest;
-var numParallelSuggest;
 var wantVolts = 0;
 var wantAmps = 0;
 var wantPrice = 0;
@@ -46,8 +44,7 @@ var wantPrice = 0;
 
 function selectCell(){
   var batCell = "";
-  batCell = $("#cellOptions").val();
-  batteryHolder = buildBatt(batCell, 1, 1);
+  batCell = $("#cellOptions").val();  
   console.log(batCell);
 }
 
@@ -112,15 +109,6 @@ function displayPrice(){
   return custPrice;
 }
 
-function suggestVolts(){
-  var batCell = stringToCellType( $("#cellOptions").val() );  
-  batteryHolder = buildBatt(batCell, 1, 1);
-  var userVolts = calcVolts();
-  temp = matchUserVolts(batCell, userVolts);
-  numSeriesSuggest = parseInt(temp);  
-  console.log(numSeriesSuggest);
-}
-
 function suggestAmps(){
   var batCell = stringToCellType( $("#cellOptions").val() );
   var userAmps = parseInt( $("#userAmps").val() );
@@ -130,7 +118,13 @@ function suggestAmps(){
   return numParallelSuggest;
 }
 
-
+function suggestVolts(){
+    var batCell = stringToCellType( $("#cellOptions").val() );  
+    batteryHolder = buildBatt(batCell, 1, 1);
+    var userVolts = wantVolts;
+    temp = matchUserVolts(d, userVolts);
+    console.log(parseInt(temp));
+  }
 
 
 

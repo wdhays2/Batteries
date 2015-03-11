@@ -18,8 +18,8 @@ var oneTenPerIncl = 1.112;
 var oneTwentyPerIncl = 1.21;
 var BatLossMultipler = 1.42857;
 
-var c = buildBattery(Pan18650, 3, 4);
-var d = buildBattery(Pan18650, 1, 1);
+
+var d = buildBattery(Gen18650, 1, 1);
 
 // Logic
 // ########################################
@@ -50,7 +50,7 @@ function buildBattery(batCell, userInputSeries, userInputParallel){
   for ( var x = 0; x < userInputParallel; x++){
     battery.push([]);    
     for ( var y = 0; y < userInputSeries; y++){
-      battery[x].push(new batCell());
+      battery[x].push(new batCell);
     }    
   }
   return battery;
@@ -125,8 +125,7 @@ function matchUserVolts(batCell, userVolts){
   var tempVolts = batCell[0][0].volts;
   var numCells  = userVolts / tempVolts;
   var closestSerMatch = numCells.toFixed(0);  
-  var actualVolts = closestSerMatch * tempVolts;
-  batCell = new batCell(batCell, 1, 1);
+  var actualVolts = closestSerMatch * tempVolts;  
   if ((actualVolts < (ninetyPerIncl * userVolts)) || (actualVolts > (oneTenPerIncl * userVolts))){
     return "Perhaps a different cell would be a better match for that voltage.";
   } else {
