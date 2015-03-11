@@ -50,7 +50,7 @@ function buildBattery(batCell, userInputSeries, userInputParallel){
   for ( var x = 0; x < userInputParallel; x++){
     battery.push([]);    
     for ( var y = 0; y < userInputSeries; y++){
-      battery[x].push(new batCell);
+      battery[x].push(new batCell());
     }    
   }
   return battery;
@@ -122,12 +122,12 @@ function getCellSpecs(batCell){
 }
 
 function matchUserVolts(batCell, userVolts){  
-  var tempVolts = batCell[0][0].volts;
+  var tempVolts = batCell.volts;
   var numCells  = userVolts / tempVolts;
-  var closestSerMatch = numCells.toFixed(0);  
+  var closestSerMatch = parseInt(numCells.toFixed(0));  
   var actualVolts = closestSerMatch * tempVolts;  
   if ((actualVolts < (ninetyPerIncl * userVolts)) || (actualVolts > (oneTenPerIncl * userVolts))){
-    return "Perhaps a different cell would be a better match for that voltage.";
+    return -1;
   } else {
     tempSerMatch = closestSerMatch;
     return closestSerMatch;
@@ -135,12 +135,12 @@ function matchUserVolts(batCell, userVolts){
 }
 
 function matchUserAmps(batCell, userAmps){
-  var tempAmps = batCell[0][0].mAhRating();
+  var tempAmps = batCell.mAhRating();
   var numCells  = userAmps / tempAmps;
-  var closestParMatch = numCells.toFixed(0);  
+  var closestParMatch = parseInt(numCells.toFixed(0));  
   var actualAmps = closestParMatch * tempAmps;  
   if ((actualAmps < (ninetyPerIncl * userAmps)) || (actualAmps > (oneTwentyPerIncl * userAmps))){
-    return "Perhaps a different cell would be a better match for that mAh rating.";
+    return -1;
   } else { 
     tempParMatch = closestParMatch;
     return closestParMatch;
@@ -152,9 +152,8 @@ function matchUserPrice(batCell, userPrice){
   var numCells  = tempSerMatch * tempParMatch;   
   var totalPrice = numCells * priceEach;  
   if (totalPrice > (oneTwentyPerIncl * userPrice)){
-    return "Perhaps a different cell would be a better match for that price range.";
-  } else { 
-
-    return numCells + " of those will cost $" + totalPrice + ".";
+    return -1;
+  } else {
+    return totalPrice;
   }  
 }
