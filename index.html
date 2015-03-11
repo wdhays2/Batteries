@@ -44,8 +44,8 @@
           <option value="DclC">Duracell "C" cell</option>
           <option value="DclAA">Duracell "AA" cell</option>
           <option value ="DclAAA">Duracell "AAA" cell</option>
-          <option value="EnlAA">Eneloop "AA" cell</option>
-          <option value="EnlAAA">Eneloop "AAA" cell</option>
+          <option value="ElpAA">Eneloop "AA" cell</option>
+          <option value="ElpAAA">Eneloop "AAA" cell</option>
         </select>
       </div>
     </form>
@@ -59,22 +59,23 @@
   </div>
   <div class="container">
     <h3>Battery Calculator</h3>
-    <form>Specify desired voltage: <input type="number" id="userVolts" min="1" max="500"></form>
-    <br>
-    <li>Actual voltage: <span id="actualVolts">0</span> volts </li>
-    <br>
-    <form>Specify desired mAh rating: <input type="number" id="userAmps" min="675" max="1000000"></form>
-    <br>
-    <li>Actual mAh rating: <span id="actualAmps">0</span> mAh </li>
-    <br>
-    <form>Specify desired price (optional): <input type="number" id="userPrice" min="1" max="100000"></form>
-    <br>
-    <li>Total price: $<span id="totalPrice">0</span> </li>
-    <br>
-    <input id="buildBattery" type="button" value="Build Battery">
+      <form>Specify desired voltage: <input type="number" id="userVolts" min="1" max="500"></form>
+      <br>
+      <li>Actual voltage: <span id="actualVolts">0</span> </li>
+      <br>
+      <form>Specify desired mAh rating: <input type="number" id="userAmps" min="675" max="1000000"></form>
+      <br>
+      <li>Actual mAh rating: <span id="actualAmps">0</span> </li>
+      <br>
+      <form>Specify desired price (optional): <input type="number" id="userPrice" min="1" max="100000"></form>
+      <br>
+      <li>Total price: <span id="totalPrice">0</span> </li>
+      <br>
+      <input id="buildBattery" type="button" value="Build Battery">
   </div>
-
-  <div id="batteryStatusArea">NO BATTERY BUILT</div>
-
+  <br>
+  <div class="well">
+    <div id="batteryStatusArea">NO BATTERY BUILT</div>
+  </div>
   </body>
 </html>
