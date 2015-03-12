@@ -152,8 +152,8 @@ function matchUserPrice(batCell, userPrice){
   var numCells  = tempSerMatch * tempParMatch;   
   var totalPrice = numCells * priceEach;  
   if ((userPrice >= 1) && (totalPrice > (oneTwentyPerIncl * userPrice))){
-    console.log(-1);
+    return -1;
   } else {
-    console.log(totalPrice);
+    return totalPrice;
   }  
 }

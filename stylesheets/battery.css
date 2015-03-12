@@ -18,6 +18,6 @@ div.infoBox {
   float: right;
   color: #787878;
 }
-div.error {
-  color: #ff0000;
+.error {
+  border-color: #ff0000;
 }

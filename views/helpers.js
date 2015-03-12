@@ -15,12 +15,10 @@ $( document ).ready(function() {
     calcAmps();    
   });
   $("#userPrice").change(function(){
-    calcPrice();        
+    calcPrice();           
   });
   $("#buildBattery").click(function() {
-    var batCell = stringToCellType( $("#cellOptions").val() );
-    var numSeries = parseInt( $("#userInputSer").val() );
-    var numParallel = parseInt( $("#userInputPar").val() );
+    var batCell = stringToCellType( $("#cellOptions").val() );    
     batteryHolder = buildBatt(batCell, numSeries, numParallel);
     updatePage();
     updateBatteryView();
@@ -34,10 +32,12 @@ $( document ).ready(function() {
 // Global Variables
 // ---------------------------
 var batteryHolder;
-var custPrice;
 var wantVolts = 0;
 var wantAmps = 0;
 var wantPrice = 0;
+var numSeries = parseInt( $("#userInputSer").val() );
+var numParallel = parseInt( $("#userInputPar").val() );
+
 // ---------------------------
 
 
@@ -48,13 +48,13 @@ function selectCell(){
 }
 
 function selectSer(){
-  var numSeries = 1;
+  var numSeries = 0;  
   numSeries = $("#userInputSer").val();
   console.log(numSeries);
 }
 
 function selectPar(){
-  var numParallel = 1;
+  var numParallel = 0;  
   numParallel = $("#userInputPar").val();
   console.log(numParallel);
 }
@@ -84,12 +84,12 @@ function calcAmps(){
 
 function calcPrice(){  
   wantPrice = $("#userPrice").val();
-  if (wantPrice * 1.21 > custPrice){
+  console.log(wantPrice);
+  if (suggestPrice() == -1){
     $("#userPrice").addClass("error");
   } else {
       $("#userPrice").removeClass("error");
-    } 
-  console.log(wantPrice);
+    }  
 }
 
 function stringToCellType(cellStr) {
@@ -121,7 +121,7 @@ function displayAmps(){
 }
 
 function displayPrice(){
-  custPrice = totalPrice(batteryHolder);
+  var custPrice = totalPrice(batteryHolder);
   $("#totalPrice").html(custPrice);
   return custPrice;
 }
@@ -129,8 +129,7 @@ function displayPrice(){
 function updatePage(){ 
   displayVolts();
   displayAmps();
-  displayPrice();
-  suggestPrice();
+  displayPrice();  
 }
 
 function suggestAmps(){
@@ -158,11 +157,12 @@ function updateBatteryView() {
     batStr += ' [';
     for(var j=0; j<batteryHolder[i].length; j++) { // series
       batStr += ' == ';
-    } if (i == batteryHolder[i].length - 1){
-      batStr +='] ';
+    } 
+    if (i == batteryHolder.length - 1){
+      batStr += '] ';
     } else {
-    batStr += '], <br>';
-  } 
+      batStr += '], <br>';
+    } 
   }
   batStr += ' ] ';
 
