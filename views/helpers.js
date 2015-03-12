@@ -158,8 +158,11 @@ function updateBatteryView() {
     batStr += ' [';
     for(var j=0; j<batteryHolder[i].length; j++) { // series
       batStr += ' == ';
-    }
-    batStr += '] <br>';
+    } if (i == batteryHolder[i].length - 1){
+      batStr +='] ';
+    } else {
+    batStr += '], <br>';
+  } 
   }
   batStr += ' ] ';
 
