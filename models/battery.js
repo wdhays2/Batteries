@@ -148,12 +148,12 @@ function matchUserAmps(batCell, userAmps){
 }
 
 function matchUserPrice(batCell, userPrice){
-  var priceEach = batCell[0][0].priceEach();
+  var priceEach = batCell.priceEach();
   var numCells  = tempSerMatch * tempParMatch;   
   var totalPrice = numCells * priceEach;  
-  if (totalPrice > (oneTwentyPerIncl * userPrice)){
-    return -1;
+  if ((userPrice >= 1) && (totalPrice > (oneTwentyPerIncl * userPrice))){
+    console.log(-1);
   } else {
-    return totalPrice;
+    console.log(totalPrice);
   }  
 }

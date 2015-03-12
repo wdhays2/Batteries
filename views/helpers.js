@@ -1,32 +1,32 @@
 $( document ).ready(function() {
   $("#cellOptions").change(function() {
-    selectCell();
+      selectCell();    
   });
   $("#userInputSer").change(function(){
-    selectSer();
+    selectSer();       
   });
   $("#userInputPar").change(function(){
-    selectPar();
+    selectPar();       
   });
   $("#userVolts").change(function(){
-    calcVolts();
+    calcVolts();    
   });
   $("#userAmps").change(function(){
-    calcAmps();
+    calcAmps();    
   });
   $("#userPrice").change(function(){
-    calcPrice();
+    calcPrice();        
   });
-
   $("#buildBattery").click(function() {
     var batCell = stringToCellType( $("#cellOptions").val() );
     var numSeries = parseInt( $("#userInputSer").val() );
     var numParallel = parseInt( $("#userInputPar").val() );
     batteryHolder = buildBatt(batCell, numSeries, numParallel);
+    updatePage();
     updateBatteryView();
-    displayVolts();
-    displayAmps();
-    displayPrice();
+    $("#userAmps").val(0);
+    $("#userVolts").val(0);
+    $("#userPrice").val();
   });  
 });
 
@@ -34,6 +34,7 @@ $( document ).ready(function() {
 // Global Variables
 // ---------------------------
 var batteryHolder;
+var custPrice;
 var wantVolts = 0;
 var wantAmps = 0;
 var wantPrice = 0;
@@ -62,16 +63,32 @@ function calcVolts(){
   wantVolts = parseInt($("#userVolts").val()); 
   console.log(wantVolts);
   $("#userInputSer").val(suggestVolts());
+  if (suggestVolts() < 0){
+    $("#userVolts").addClass("error");
+  } else {
+      $("#userVolts").removeClass("error");
+    } 
+  
 }
 
 function calcAmps(){  
   wantAmps = parseInt($("#userAmps").val());  
   console.log(wantAmps);
   $("#userInputPar").val(suggestAmps());
+  if (suggestAmps() < 0){
+    $("#userAmps").addClass("error");
+  } else {
+      $("#userAmps").removeClass("error");
+    } 
 }
 
 function calcPrice(){  
-  wantPrice = parseInt($("#userPrice").val());
+  wantPrice = $("#userPrice").val();
+  if (wantPrice * 1.21 > custPrice){
+    $("#userPrice").addClass("error");
+  } else {
+      $("#userPrice").removeClass("error");
+    } 
   console.log(wantPrice);
 }
 
@@ -104,9 +121,16 @@ function displayAmps(){
 }
 
 function displayPrice(){
-  var custPrice = totalPrice(batteryHolder);
+  custPrice = totalPrice(batteryHolder);
   $("#totalPrice").html(custPrice);
   return custPrice;
+}
+
+function updatePage(){ 
+  displayVolts();
+  displayAmps();
+  displayPrice();
+  suggestPrice();
 }
 
 function suggestAmps(){
@@ -115,8 +139,13 @@ function suggestAmps(){
 }
 
 function suggestVolts(){
-    var batCell = stringToCellType( $("#cellOptions").val() );
-    return matchUserVolts(new batCell(), wantVolts);
+  var batCell = stringToCellType( $("#cellOptions").val() );
+  return matchUserVolts(new batCell(), wantVolts);
+}
+
+function suggestPrice(){
+  var batCell = stringToCellType( $("#cellOptions").val() );
+  return matchUserPrice(new batCell(), wantPrice);
 }
 
 function updateBatteryView() {
@@ -135,4 +164,4 @@ function updateBatteryView() {
   batStr += ' ] ';
 
   $("#batteryStatusArea").html(batStr);
-}
+}      
