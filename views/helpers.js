@@ -18,7 +18,9 @@ $( document ).ready(function() {
     calcPrice();           
   });
   $("#buildBattery").click(function() {
-    var batCell = stringToCellType( $("#cellOptions").val() );    
+    var batCell = stringToCellType( $("#cellOptions").val() );
+    numSeries = parseInt( $("#userInputSer").val() );
+    numParallel = parseInt( $("#userInputPar").val() );    
     batteryHolder = buildBatt(batCell, numSeries, numParallel);
     updatePage();
     updateBatteryView();
@@ -35,8 +37,8 @@ var batteryHolder;
 var wantVolts = 0;
 var wantAmps = 0;
 var wantPrice = 0;
-var numSeries = parseInt( $("#userInputSer").val() );
-var numParallel = parseInt( $("#userInputPar").val() );
+var numSeries = 0; 
+var numParallel = 0; 
 
 // ---------------------------
 
@@ -47,15 +49,13 @@ function selectCell(){
   console.log(batCell);
 }
 
-function selectSer(){
-  var numSeries = 0;  
+function selectSer(){   
   numSeries = $("#userInputSer").val();
   console.log(numSeries);
 }
 
-function selectPar(){
-  var numParallel = 0;  
-  numParallel = $("#userInputPar").val();
+function selectPar(){   
+  numSeries = $("#userInputPar").val();
   console.log(numParallel);
 }
 
@@ -67,8 +67,7 @@ function calcVolts(){
     $("#userVolts").addClass("error");
   } else {
       $("#userVolts").removeClass("error");
-    } 
-  
+    }  
 }
 
 function calcAmps(){  
