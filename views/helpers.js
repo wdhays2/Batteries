@@ -151,19 +151,18 @@ function updateBatteryView() {
   //   [c1,c2,c3], 
   //   [c4,c5,c6]
   // ]
-  var batStr = '[ ';
+  var batStr = '';  
   for(var i=0; i<batteryHolder.length; i++) { // parallel
-    batStr += ' [';
+    
     for(var j=0; j<batteryHolder[i].length; j++) { // series
-      batStr += ' == ';
+      batStr += '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHbq2XTBLOaNfmWUTguOMwZdii-dJaMkriNpLQWhjLaMuv-QB_Jw" style="width:50px;height:25px"/>';
     } 
     if (i == batteryHolder.length - 1){
-      batStr += '] ';
+      batStr += '';
     } else {
-      batStr += '], <br>';
+      batStr += ' <br>';
     } 
   }
-  batStr += ' ] ';
-
+  
   $("#batteryStatusArea").html(batStr);
-}      
+}
