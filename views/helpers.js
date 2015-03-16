@@ -55,7 +55,7 @@ function selectSer(){
 }
 
 function selectPar(){   
-  numSeries = $("#userInputPar").val();
+  numParallel = $("#userInputPar").val();
   console.log(numParallel);
 }
 
